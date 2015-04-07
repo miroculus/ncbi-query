@@ -1,0 +1,26 @@
+{
+  "name": "ncbi-query",
+  "version": "0.0.1",
+  "description": "Build queries to the National Center for Biotechnology Information with node.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miroculus/ncbi-query.git"
+  },
+  "keywords": [
+    "ncbi"
+  ],
+  "author": "@agar3s for miroculus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miroculus/ncbi-query/issues"
+  },
+  "homepage": "https://github.com/miroculus/ncbi-query",
+  "dependencies": {
+    "request": "^2.55.0",
+    "xml2js": "^0.4.6"
+  }
+}
