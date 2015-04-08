@@ -3,7 +3,11 @@ var queryString = require('querystring');
 var parseString = require('xml2js').parseString;
 
 var host = 'http://eutils.ncbi.nlm.nih.gov/';
-var path = 'entrez/eutils/esearch.fcgi'
+var path = 'entrez/eutils/';
+var services = {
+  search:'esearch.fcgi',
+  fetch:'efetch.fcgi'
+};
 
 /**
  * [searchRequest description]
@@ -27,7 +31,7 @@ var searchRequest = function(database, terms, retmax, retStart, etype, reldate, 
   if(reldate==-1){
     delete query.reldate;
   }
-  var urlRequest = host+path+'?'+queryString.stringify(query);
+  var urlRequest = host+path+services.search+'?'+queryString.stringify(query);
   request(urlRequest, function(err, resp, body){
     if(err){
       return callback(err);
@@ -39,9 +43,32 @@ var searchRequest = function(database, terms, retmax, retStart, etype, reldate, 
       callback(null, result);
     });
   });
+};
 
-}
+
+var fetchContent = function(database, id, callback){
+  var query = {
+    db: database,
+    id: id,
+    rettype: 'xml'
+  };
+
+  var urlRequest = host+path+services.fetch+'?'+queryString.stringify(query);
+  console.log(urlRequest);
+  request(urlRequest, function(err, resp, body){
+    if(err){
+      return callback(err);
+    }
+    parseString(body, function (err, result) {
+      if(err){
+        return callback(err);
+      }
+      callback(null, result);
+    });
+  });
+};
 
 module.exports = {
-  searchRequest: searchRequest
+  searchRequest: searchRequest,
+  fetchContent: fetchContent
 };
